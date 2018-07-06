@@ -26,10 +26,6 @@
 #ifndef	__LSM6DX0_H__
 #define	__LSM6DX0_H__
 
-#define CONFIG_INPUT_LSM6DX0_S_MODEL 1
-#define LSM6DX0_ACC_CALIBERATE
-#define LSM6DX0_GYR_CALIBERATE
-
 #ifdef CONFIG_INPUT_LSM6DX0_S_MODEL
 /** LSM6DS0 model */
 #define LSM6DX0_ACC_GYR_DEV_NAME	"lsm6ds0"
@@ -51,8 +47,12 @@
 /* Accelerometer Sensor Full Scale */
 #define LSM6DX0_ACC_FS_MASK		(0x18)
 #define LSM6DX0_ACC_FS_2G 		(0x00)	/* Full scale 2g */
+//#define LSM6DX0_ACC_FS_4G 		(0x08)	/* Full scale 4g */
 #define LSM6DX0_ACC_FS_4G 		(0x10)	/* Full scale 4g */
+
+//#define LSM6DX0_ACC_FS_8G 		(0x10)	/* Full scale 8g */
 #define LSM6DX0_ACC_FS_8G 		(0x18)	/* Full scale 8g */
+
 
 /* Accelerometer Anti-Aliasing Filter */
 #define LSM6DX0_ACC_BW_400		(0X00)
@@ -93,7 +93,7 @@
 #define LSM6DX0_GYR_ODR_OFF		(0x00)
 #define LSM6DX0_GYR_ODR_MASK		(0xE0)
 #define LSM6DX0_GYR_ODR_MASK_SHIFT	(5)
-#define LSM6DX0_GYR_ODR_001		(1 << LSM6DX0_GYR_ODR_MASK_SHIFT)
+#define LSM6DX0_GYR_ODR_001		(2 << LSM6DX0_GYR_ODR_MASK_SHIFT)
 #define LSM6DX0_GYR_ODR_010		(2 << LSM6DX0_GYR_ODR_MASK_SHIFT)
 #define LSM6DX0_GYR_ODR_011		(3 << LSM6DX0_GYR_ODR_MASK_SHIFT)
 #define LSM6DX0_GYR_ODR_100		(4 << LSM6DX0_GYR_ODR_MASK_SHIFT)
@@ -152,12 +152,7 @@ struct lsm6dx0_acc_platform_data {
 	uint32_t min_interval;
 	uint8_t fs_range;
 	uint8_t aa_filter_bandwidth;
-#ifdef LSM6DX0_ACC_CALIBERATE
-	int32_t biasX;
-	int32_t biasY;
-	int32_t biasZ;
-	int32_t cali_update;
-#endif
+
 	int32_t (*init)(void);
 	void (*exit)(void);
 	int32_t (*power_on)(void);
@@ -168,12 +163,7 @@ struct lsm6dx0_gyr_platform_data {
 	uint32_t poll_interval;
 	uint32_t min_interval;
 	uint8_t fs_range;
-#ifdef LSM6DX0_GYR_CALIBERATE
-	int32_t biasX;
-	int32_t biasY;
-	int32_t biasZ;
-	int32_t cali_update;
-#endif
+
 	int32_t (*init)(void);
 	void (*exit)(void);
 	int32_t (*power_on)(void);
